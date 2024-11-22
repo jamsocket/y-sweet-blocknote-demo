@@ -1,3 +1,4 @@
+import { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
@@ -7,7 +8,8 @@ const inter = Inter({
   display: "swap",
 });
 
-export const metadata = { title: "Next.js + Y-Sweet" };
+export const metadata: Metadata = { title: "Y-Sweet + BlockNote" };
+export const viewport: Viewport = { colorScheme: "light dark" };
 
 export default function RootLayout({
   children,
@@ -16,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
-      <body className="bg-[#fcfaf0]">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
