@@ -85,10 +85,15 @@ const defaultUser = {
   color: randomColor(),
 };
 
+export interface User {
+  name: string;
+  color: string;
+}
+
 export function useSelf(id: string) {
   const key = `blocknote-user-${id}`;
 
-  const [value, setValue] = useState(() => {
+  const [value, setValue] = useState<User>(() => {
     try {
       const stored = window.localStorage.getItem(key);
       return stored !== null ? JSON.parse(stored) : defaultUser;

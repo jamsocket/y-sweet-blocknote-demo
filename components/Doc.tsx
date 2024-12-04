@@ -14,7 +14,7 @@ export function Doc({ id }: { id: string }) {
   const provider = useYjsProvider();
   const doc = useYDoc();
 
-  const [self] = useSelf(id);
+  const [self, setSelf] = useSelf(id);
 
   const setPresence = usePresenceSetter();
   useEffect(() => setPresence(self), [self, setPresence]);
@@ -29,7 +29,7 @@ export function Doc({ id }: { id: string }) {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
-      <Header self={self} />
+      <Header self={self} onUpdateSelf={setSelf} />
       <main className="p-4 flex-1 overflow-y-auto">
         <BlockNoteView editor={editor} />
       </main>
