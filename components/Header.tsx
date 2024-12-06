@@ -1,18 +1,26 @@
 import { usePresence } from "@y-sweet/react";
+
 import { Avatar } from "./Avatar";
+import type { User } from "@/lib/user";
 
 interface Props {
-  self: { name: string; color: string };
-  onUpdateSelf(self: { name: string; color: string }): void;
+  title: string;
+  onUpdateTitle(title: string): void;
+  self: User;
+  onUpdateSelf(self: User): void;
 }
 
 export function Header(props: Props) {
-  const { self, onUpdateSelf } = props;
-  const presence = usePresence();
+  const { title, onUpdateTitle, self, onUpdateSelf } = props;
+  const presence = usePresence<User>();
 
   return (
-    <header className="isolate z-10 relative flex justify-between items-center p-2 border-b border-gray-200 dark:border-gray-700">
-      <h1 className="font-bold">Y-Sweet + BlockNote</h1>
+    <header className="isolate z-10 relative flex justify-between items-center p-2 border-b border-gray-200">
+      <input
+        className="px-2 py-1"
+        onInput={(e) => onUpdateTitle(e.currentTarget.value)}
+        value={title}
+      />
       <ul className="flex flex-row-reverse gap-1 group">
         {[...presence.entries()].map(([id, user]) => (
           <li

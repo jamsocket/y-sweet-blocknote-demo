@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
 const COLORS = [
   "#FF5C5C",
@@ -80,31 +81,16 @@ function randomUsername() {
   return choose(ADJECTIVES) + " " + choose(ANIMALS);
 }
 
-const defaultUser = {
-  name: randomUsername(),
-  color: randomColor(),
-};
-
 export interface User {
   name: string;
   color: string;
 }
 
-export function useSelf(id: string) {
-  const key = `blocknote-user-${id}`;
+const self = atomWithStorage("ysweet-blocknote-user", {
+  name: randomUsername(),
+  color: randomColor(),
+});
 
-  const [value, setValue] = useState<User>(() => {
-    try {
-      const stored = window.localStorage.getItem(key);
-      return stored !== null ? JSON.parse(stored) : defaultUser;
-    } catch {
-      return defaultUser;
-    }
-  });
-
-  useEffect(() => {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
-
-  return [value, setValue];
+export function useSelf() {
+  return useAtom(self);
 }
